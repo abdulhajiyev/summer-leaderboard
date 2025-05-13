@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
-import { Menu, X } from "lucide-react";
+import { Menu, X, UserRoundCog } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -78,7 +78,16 @@ export function Navbar() {
 							</Link>
 						</SignedOut>
 						<SignedIn>
-							<UserButton />
+							<UserButton>
+								<UserButton.MenuItems>
+									<UserButton.Action
+										label="Open profile settings"
+										labelIcon={<UserRoundCog size={16}/>}
+										onClick={() => alert("init chat")}
+									/>
+									<UserButton.Action label="signOut" />
+								</UserButton.MenuItems>
+							</UserButton>
 						</SignedIn>
 					</div>
 

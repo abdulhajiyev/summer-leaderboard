@@ -28,9 +28,9 @@ export default function Dashboard() {
 
 	// map top-3 ranks to “medal” colors
 	const rankColorMap: Record<number, string> = {
-		1: "text-yellow-400 glow-gold", // gold
-		2: "text-gray-400 glow-silver", // silver
-		3: "text-orange-300 glow-bronze", // bronze
+		1: "text-yellow-400 ", // gold
+		2: "text-gray-400 ", // silver
+		3: "text-orange-300 ", // bronze
 	};
 
 	const currentRank = 3;
@@ -48,7 +48,7 @@ export default function Dashboard() {
 	].sort((a, b) => b.sales - a.sales);
 
 	const chartConfig = {
-		sales: { label: "Satış", color: "var(--chart-2)" },
+		sales: { label: "Satış", color: "var(--chart-1)" },
 	} satisfies ChartConfig;
 
 	// generate 30 days of fake performance data for Evelyn
@@ -73,7 +73,7 @@ export default function Dashboard() {
 				: "text-muted-foreground";
 
 	const perfConfig = {
-		value: { label: "Satış", color: "var(--chart-1)" },
+		value: { label: "Satış", color: "var(--chart-2)" },
 	} satisfies ChartConfig;
 
 	if (!isLoaded) {

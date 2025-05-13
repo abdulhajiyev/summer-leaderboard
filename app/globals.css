@@ -428,3 +428,7 @@
       0 0 80px var(--glow-color);
   }
 }
+
+.cl-button__manageAccount {
+  display: none
+}
