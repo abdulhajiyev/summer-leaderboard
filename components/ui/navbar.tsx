@@ -68,12 +68,12 @@ export function Navbar() {
 					</div>
 					<div className="flex items-center space-x-2">
 						<SignedOut>
-							<Link href="/sign-in">
+							<Link href="/signin">
 								<Button variant="outline" size="sm">
 									Sign In
 								</Button>
 							</Link>
-							<Link href="/sign-up">
+							<Link href="/signup">
 								<Button size="sm">Sign Up</Button>
 							</Link>
 						</SignedOut>
@@ -173,12 +173,12 @@ export function Navbar() {
 								</SignedIn>
 								<div className="flex flex-col space-y-2 pt-2">
 									<SignedOut>
-										<Link href="/sign-in" onClick={() => setIsOpen(false)}>
+										<Link href="/signin" onClick={() => setIsOpen(false)}>
 											<Button variant="outline" size="sm" className="w-full">
 												Sign In
 											</Button>
 										</Link>
-										<Link href="/sign-up" onClick={() => setIsOpen(false)}>
+										<Link href="/signup" onClick={() => setIsOpen(false)}>
 											<Button size="sm" className="w-full">
 												Sign Up
 											</Button>

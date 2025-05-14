@@ -8,9 +8,9 @@ export default async function ProtectedLayout({
 }) {
 	const { userId, sessionClaims } = await auth();
 
-	// If user is not authenticated, redirect to sign-in
+	// If user is not authenticated, redirect to signin
 	if (!userId) {
-		return redirect("/sign-in");
+		return redirect("/signin");
 	}
 
 	// If authenticated but hasn't completed onboarding, redirect to onboarding

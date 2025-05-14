@@ -34,6 +34,8 @@ export const completeOnboarding = async (formData: FormData) => {
         companyName: payload.data.companyName,
         agent: payload.data.agent,
       },
+      firstName: payload.data.firstName,
+      lastName: payload.data.lastName,
     })
 
     // handle profile image upload
