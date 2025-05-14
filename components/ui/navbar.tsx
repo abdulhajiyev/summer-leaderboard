@@ -54,7 +54,7 @@ export function Navbar() {
 						>
 							About
 						</Link>
-						<SignedIn>
+						{/* <SignedIn>
 							<Link
 								href="/dashboard"
 								className={cn(
@@ -64,10 +64,18 @@ export function Navbar() {
 							>
 								Dashboard
 							</Link>
-						</SignedIn>
+						</SignedIn> */}
 					</div>
 					<div className="flex items-center space-x-2">
-						<SignedOut>
+						<Link href="/signup">
+							<Button size="lg">Sign up</Button>
+						</Link>
+						<Link href="/login">
+							<Button variant="outline" size="lg">
+								Login
+							</Button>
+						</Link>
+						{/* <SignedOut>
 							<Link href="/sign-in">
 								<Button variant="outline" size="sm">
 									Sign In
@@ -88,7 +96,7 @@ export function Navbar() {
 									<UserButton.Action label="signOut" />
 								</UserButton.MenuItems>
 							</UserButton>
-						</SignedIn>
+						</SignedIn> */}
 					</div>
 
 					{/* Signin */}

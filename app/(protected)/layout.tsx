@@ -1,22 +1,18 @@
-import { auth } from "@clerk/nextjs/server";
+import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { headers } from "next/headers";
 
 export default async function ProtectedLayout({
 	children,
 }: {
 	children: React.ReactNode;
 }) {
-	const { userId, sessionClaims } = await auth();
-
-	// If user is not authenticated, redirect to sign-in
-	if (!userId) {
+	// fetch session from request headers
+	const session = await auth.api.getSession({ headers: await headers() });
+	// Redirect unauthenticated users to sign-in
+	if (!session) {
 		return redirect("/sign-in");
 	}
-
-	// If authenticated but hasn't completed onboarding, redirect to onboarding
-	if (!sessionClaims?.metadata?.onboardingComplete) {
-		return redirect("/onboarding");
-	}
-
+	// TODO: handle onboarding metadata if needed
 	return <>{children}</>;
 }

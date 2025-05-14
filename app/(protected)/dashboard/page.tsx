@@ -1,5 +1,3 @@
-"use client";
-
 import { ChartArea } from "@/components/charts/chart-area";
 import { ChartBarMixed } from "@/components/charts/chart-bar-mixed";
 import {
@@ -23,8 +21,21 @@ import {
 	Trophy,
 } from "lucide-react";
 
-export default function Dashboard() {
-	const { user, isLoaded } = useUser();
+import { redirect } from "next/navigation";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+
+
+export default async function Dashboard() {
+	const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session) {
+    redirect("/login");
+  }
+	
+	// const { user, isLoaded } = useUser();
 
 	// map top-3 ranks to “medal” colors
 	const rankColorMap: Record<number, string> = {
@@ -75,19 +86,19 @@ export default function Dashboard() {
 	const perfConfig = {
 		value: { label: "Satış", color: "var(--chart-2)" },
 	} satisfies ChartConfig;
-
+/* 
 	if (!isLoaded) {
 		return (
 			<div className="flex items-center justify-center h-full my-auto">
 				<LucideLoader className="h-8 w-8 animate-spin text-muted-foreground" />
 			</div>
 		);
-	}
+	} */
 
 	return (
 		<div className="mx-4 lg:mx-auto max-w-7xl sm:px-6 my-auto lg:px-8 flex flex-col justify-center py-10">
 			<h1 className="text-3xl font-bold mb-6">
-				Xoş gəlmisiniz, {user?.firstName || "İstifadəçi"}
+				Xoş gəlmisiniz, {session.user.name || "İstifadəçi"}
 			</h1>
 
 			<div className="grid gap-6 md:grid-cols-3 lg:grid-cols-3">
