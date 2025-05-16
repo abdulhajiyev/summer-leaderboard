@@ -8,10 +8,25 @@ import { Menu, X, UserRoundCog } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
+import { useSession } from "@/lib/auth-client";
+import { NavUser } from "../nav-user";
+import { ShinyButton } from "@/components/magicui/shiny-button";
 
-export function Navbar() {
+
+import type { Session } from "better-auth";
+
+interface NavbarProps {
+	session: Session | null;
+}
+
+export function Navbar({session}: NavbarProps) {
 	const [isOpen, setIsOpen] = React.useState(false);
 	const pathname = usePathname();
+	const user = {
+		name: session?.user.name || "",
+		email: session?.user.email || "",
+		avatar: session?.user.image || "",
+	}
 
 	return (
 		<nav className="sticky top-0 z-40 flex items-center justify-center w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -54,6 +69,17 @@ export function Navbar() {
 						>
 							About
 						</Link>
+						{session && (
+							<Link
+								href="/dashboard"
+								className={cn(
+									"text-sm font-medium transition-colors hover:text-primary",
+									pathname.startsWith("/dashboard") && "text-primary",
+								)}
+							>
+								Dashboard
+							</Link>
+						)}
 						{/* <SignedIn>
 							<Link
 								href="/dashboard"
@@ -66,37 +92,15 @@ export function Navbar() {
 							</Link>
 						</SignedIn> */}
 					</div>
-					<div className="flex items-center space-x-2">
-						<Link href="/signup">
-							<Button size="lg">Sign up</Button>
-						</Link>
-						<Link href="/login">
-							<Button variant="outline" size="lg">
-								Login
-							</Button>
-						</Link>
-						{/* <SignedOut>
+					<div className="flex items-center space-x-2 px-4">
+						{/* if session is null show sign up and sign in buttons */}
+						{session ? (
+							<NavUser user={user}/>
+						) : (
 							<Link href="/sign-in">
-								<Button variant="outline" size="sm">
-									Sign In
-								</Button>
+								<ShinyButton>Daxil ol</ShinyButton>
 							</Link>
-							<Link href="/sign-up">
-								<Button size="sm">Sign Up</Button>
-							</Link>
-						</SignedOut>
-						<SignedIn>
-							<UserButton>
-								<UserButton.MenuItems>
-									<UserButton.Action
-										label="Open profile settings"
-										labelIcon={<UserRoundCog size={16}/>}
-										onClick={() => alert("init chat")}
-									/>
-									<UserButton.Action label="signOut" />
-								</UserButton.MenuItems>
-							</UserButton>
-						</SignedIn> */}
+						)}
 					</div>
 
 					{/* Signin */}

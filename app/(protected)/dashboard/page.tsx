@@ -1,3 +1,4 @@
+"use client";
 import { ChartArea } from "@/components/charts/chart-area";
 import { ChartBarMixed } from "@/components/charts/chart-bar-mixed";
 import {
@@ -19,22 +20,33 @@ import {
 	TrendingDown,
 	Users,
 	Trophy,
+	Plus,
 } from "lucide-react";
-
-import { redirect } from "next/navigation";
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
+} from "@/components/ui/table";
+import { useSessionContext } from "@/components/session-context";
+import { Button } from "@/components/ui/button";
+import type { Sale } from "@/types/sales";
+/* import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
+import { headers } from "next/headers"; */
 
+export default function Dashboard() {
+	const { session, isLoading } = useSessionContext();
 
-export default async function Dashboard() {
-	const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+	/* 	const session = await auth.api.getSession({
+		headers: await headers(),
+	});
 
-  if (!session) {
-    redirect("/login");
-  }
-	
+	if (!session) {
+		redirect("/sign-in");
+	} */
 	// const { user, isLoaded } = useUser();
 
 	// map top-3 ranks to “medal” colors
@@ -86,20 +98,71 @@ export default async function Dashboard() {
 	const perfConfig = {
 		value: { label: "Satış", color: "var(--chart-2)" },
 	} satisfies ChartConfig;
-/* 
-	if (!isLoaded) {
+
+	// Mock sales data
+	const recentSales: Sale[] = [
+		{
+			id: "1",
+			clientName: "Əhməd Məmmədov",
+			destination: "İstanbul",
+			amount: 1200,
+			date: "2024-05-15",
+			status: "confirmed",
+		},
+		{
+			id: "2",
+			clientName: "Leyla Əliyeva",
+			destination: "Dubai",
+			amount: 2500,
+			date: "2024-05-14",
+			status: "pending",
+		},
+		{
+			id: "3",
+			clientName: "Kamal Həsənov",
+			destination: "Antalya",
+			amount: 800,
+			date: "2024-05-13",
+			status: "cancelled",
+		},
+		{
+			id: "4",
+			clientName: "Fatimə Quliyeva",
+			destination: "Paris",
+			amount: 1800,
+			date: "2024-05-12",
+			status: "confirmed",
+		},
+		{
+			id: "5",
+			clientName: "Orxan Əzizov",
+			destination: "London",
+			amount: 2200,
+			date: "2024-05-11",
+			status: "confirmed",
+		},
+	];
+
+	if (isLoading) {
 		return (
 			<div className="flex items-center justify-center h-full my-auto">
 				<LucideLoader className="h-8 w-8 animate-spin text-muted-foreground" />
 			</div>
 		);
-	} */
+	}
 
 	return (
 		<div className="mx-4 lg:mx-auto max-w-7xl sm:px-6 my-auto lg:px-8 flex flex-col justify-center py-10">
-			<h1 className="text-3xl font-bold mb-6">
-				Xoş gəlmisiniz, {session.user.name || "İstifadəçi"}
-			</h1>
+			<div className="flex justify-center items-center mb-6">
+				<h1 className="text-3xl font-bold">
+					Xoş gəlmisiniz, {session?.user.name || "İstifadəçi"}
+				</h1>
+				{/* add button for adding new sales */}
+				<Button className="ml-auto cursor-pointer">
+					<Plus className="h-4 w-4 mr-2" />
+					Rezervasiya Əlavə Et
+				</Button>
+			</div>
 
 			<div className="grid gap-6 md:grid-cols-3 lg:grid-cols-3">
 				<Card>
@@ -205,6 +268,38 @@ export default async function Dashboard() {
 					footerRight="Hər agent üzrə ümumi satışların müqayisəsi"
 					barColor="var(--color-sales)"
 				/>
+			</div>
+
+			{/* Recent Sales Section */}
+			<div className="mt-6">
+				<Card>
+					<CardHeader>
+						<CardTitle>Son Satışlar</CardTitle>
+						<CardDescription>Son əlavə edilən rezervasiyalar</CardDescription>
+					</CardHeader>
+					<CardContent>
+						<Table>
+							<TableHeader>
+								<TableRow>
+									<TableHead>Rezervasiya №</TableHead>
+									<TableHead>Tarix</TableHead>
+								</TableRow>
+							</TableHeader>
+							<TableBody>
+								{recentSales.map((sale) => (
+									<TableRow key={sale.id}>
+										<TableCell className="font-medium">
+											№ {sale.id.padStart(6, "0")}
+										</TableCell>
+										<TableCell>
+											{new Date(sale.date).toLocaleDateString("az-AZ")}
+										</TableCell>
+									</TableRow>
+								))}
+							</TableBody>
+						</Table>
+					</CardContent>
+				</Card>
 			</div>
 		</div>
 	);

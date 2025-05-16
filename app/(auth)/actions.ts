@@ -28,10 +28,9 @@ export const loginEmail = validatedAction<typeof LoginSchema, ActionState>(
 		try {
 			await auth.api.signInEmail({ body: { email, password } });
 			redirect("/dashboard");
-			return {};
 		} catch {
 			// Return error and preserve input values
 			return { error: "Invalid email or password", email, password };
 		}
-	}
+	},
 );

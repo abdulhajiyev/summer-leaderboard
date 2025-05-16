@@ -19,28 +19,28 @@ import {
 import { Button } from "@/components/ui/button";
 import { ChevronDown, ChevronUp, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import LeaderboardPage from "@/components/Leaderboard";
 
 // Sample data for the leaderboard
 const initialData = [
-	{ id: 1, name: "John Smith", score: 230, team: "Alpha", position: "1st" },
-	{ id: 2, name: "Jane Doe", score: 215, team: "Beta", position: "2nd" },
-	{ id: 3, name: "Alex Johnson", score: 198, team: "Alpha", position: "3rd" },
-	{ id: 4, name: "Sarah Williams", score: 185, team: "Gamma", position: "4th" },
-	{ id: 5, name: "Mike Brown", score: 170, team: "Beta", position: "5th" },
-	{ id: 6, name: "Lisa Davis", score: 165, team: "Gamma", position: "6th" },
-	{ id: 7, name: "Robert Wilson", score: 155, team: "Alpha", position: "7th" },
-	{ id: 8, name: "Emily Taylor", score: 145, team: "Beta", position: "8th" },
-	{ id: 9, name: "David Anderson", score: 130, team: "Gamma", position: "9th" },
+	{ id: 1, name: "John Smith", score: 230, team: "Alpha" },
+	{ id: 2, name: "Jane Doe", score: 215, team: "Beta" },
+	{ id: 3, name: "Alex Johnson", score: 198, team: "Alpha" },
+	{ id: 4, name: "Sarah Williams", score: 185, team: "Gamma" },
+	{ id: 5, name: "Mike Brown", score: 170, team: "Beta" },
+	{ id: 6, name: "Lisa Davis", score: 165, team: "Gamma" },
+	{ id: 7, name: "Robert Wilson", score: 155, team: "Alpha" },
+	{ id: 8, name: "Emily Taylor", score: 145, team: "Beta" },
+	{ id: 9, name: "David Anderson", score: 130, team: "Gamma" },
 	{
 		id: 10,
 		name: "Anna Martinez",
 		score: 125,
 		team: "Alpha",
-		position: "10th",
 	},
 ];
 
-export default function LeaderboardPage() {
+export default function Page() {
 	const [data] = useState(initialData);
 	const [searchTerm, setSearchTerm] = useState("");
 
@@ -58,7 +58,7 @@ export default function LeaderboardPage() {
 					<CardDescription>
 						Track and compare performance metrics for all participants
 					</CardDescription>
-					{/* <div className="relative mt-4">
+					<div className="relative mt-4">
 						<Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
 						<Input
 							type="search"
@@ -67,7 +67,7 @@ export default function LeaderboardPage() {
 							value={searchTerm}
 							onChange={(e) => setSearchTerm(e.target.value)}
 						/>
-					</div> */}
+					</div>
 				</CardHeader>
 				<CardContent>
 					<Table>
@@ -84,7 +84,7 @@ export default function LeaderboardPage() {
 						<TableBody>
 							{filteredData.map((entry) => (
 								<TableRow key={entry.id}>
-									<TableCell className="font-bold">{entry.position}</TableCell>
+									<TableCell className="font-bold">{entry.id}</TableCell>
 									<TableCell>{entry.name}</TableCell>
 									<TableCell>{entry.team}</TableCell>
 									<TableCell className="text-right">
@@ -106,6 +106,7 @@ export default function LeaderboardPage() {
 					</Table>
 				</CardContent>
 			</Card>
+			{/* <LeaderboardPage /> */}
 		</div>
 	);
 }
