@@ -80,6 +80,15 @@ export function Navbar({session}: NavbarProps) {
 								Dashboard
 							</Link>
 						)}
+						<Link
+								href="/dashboard2"
+								className={cn(
+									"text-sm font-medium transition-colors hover:text-primary",
+									pathname.startsWith("/dashboard") && "text-primary",
+								)}
+							>
+								Dashboard 2
+							</Link>
 						{/* <SignedIn>
 							<Link
 								href="/dashboard"
